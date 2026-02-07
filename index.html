@@ -5,16 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Rose Day Special</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background: #fff0f5;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
     text-align: center;
 }
 
@@ -33,48 +36,50 @@ body {
 
 .box {
     background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    max-width: 400px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    max-width: 420px;
     width: 100%;
 }
 
 input {
-    padding: 10px;
+    padding: 12px;
     width: 90%;
     margin: 10px 0;
     font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
 }
 
 button {
-    padding: 12px 20px;
+    padding: 12px 22px;
     margin: 10px;
     font-size: 18px;
     border: none;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
 }
 
 .yes {
-    background: #4caf50;
+    background: #ff4e50;
     color: white;
 }
 
 .no {
-    background: #f44336;
+    background: #444;
     color: white;
 }
 
 .rose-grow {
-    font-size: 60px;
+    font-size: 70px;
     animation: grow 3s infinite;
 }
 
 @keyframes grow {
-    0% { transform: scale(0.5); }
-    50% { transform: scale(1); }
-    100% { transform: scale(0.5); }
+    0% { transform: scale(0.6); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(0.6); }
 }
 
 .floating-roses {
@@ -88,7 +93,7 @@ button {
 
 .rose {
     position: absolute;
-    font-size: 30px;
+    font-size: 32px;
     animation: float 4s linear infinite;
 }
 
@@ -98,79 +103,87 @@ button {
 }
 
 img {
-    max-width: 200px;
+    max-width: 220px;
     margin: 15px;
+    border-radius: 15px;
 }
 
 h1, h2, h3 {
     margin-bottom: 10px;
+    font-family: 'Dancing Script', cursive;
+    font-style: italic;
 }
+
+p {
+    font-style: italic;
+}
+
+.title {
+    font-size: 28px;
+    color: #b3003b;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- Sound Effects -->
-<audio id="popSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+<audio id="popSound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
 <audio id="sadSound" src="https://www.soundjay.com/human/sounds/female-crying-1.mp3"></audio>
 
-<!-- NAME INPUT SCREEN -->
+<!-- NAME SCREEN -->
 <div class="screen active" id="nameScreen">
     <div class="box">
-        <h2>Before the rose grows… 🌱</h2>
-        <p>Who is this rose for?</p>
+        <h2 class="title">Before the rose grows… 🌱</h2>
+        <p>Tell me the lucky name 😄</p>
 
-        <input id="nameInput" placeholder="Enter your name" />
+        <input id="nameInput" placeholder="Enter name here" />
 
         <button class="yes" onclick="saveName()">
-            Grow my rose 🌱
+            Grow my rose 🌹
         </button>
     </div>
 </div>
 
-<!-- GROWING SCREEN -->
+<!-- GROWING -->
 <div class="screen" id="growScreen">
     <h2 id="growText"></h2>
     <div class="rose-grow">🌹</div>
 </div>
 
-<!-- MAIN CHOICE SCREEN -->
+<!-- CHOICE -->
 <div class="screen" id="choiceScreen">
     <div class="box">
         <h2 id="mainText"></h2>
-        <p>This rose is for you 🌹</p>
+        <p>This cute rose is only for you 🌹</p>
 
-        <img src="https://i.imgur.com/O4M4x5p.png" alt="cat meme">
+        <img src="gun-cat.gif" alt="gun cat meme">
 
-        <h3>No drama, keep the rose 🔫🐱</h3>
+        <h3>Keep the rose… no arguments 😼</h3>
 
         <button class="yes" onclick="yesPage()">YES 😄</button>
         <button class="no" onclick="noPage()">NO 🙃</button>
     </div>
 </div>
 
-<!-- YES SCREEN -->
+<!-- YES -->
 <div class="screen" id="yesScreen">
     <div class="floating-roses" id="roses"></div>
 
     <div class="box">
         <h1 id="yesText"></h1>
-        <p>You officially own this rose now 😎</p>
+        <p>You just made a very smart decision 😄</p>
 
-        <div style="font-size:80px;">🌹</div>
+        <div style="font-size:90px;">🌹</div>
 
-        <p>Screenshot this rose so it’s officially yours 😄</p>
-
-        <button class="yes" onclick="resetAll()">
-            Grow another rose 🌹
-        </button>
+        <p>Screenshot this rose – it officially belongs to you!</p>
     </div>
 </div>
 
-<!-- NO SCREEN -->
+<!-- NO -->
 <div class="screen" id="noScreen">
     <div class="box">
-        <img src="https://i.imgur.com/k1o5Q4T.png" alt="crying cat">
+        <img src="crying-cat.webp" alt="crying cat">
 
         <h2 id="noText"></h2>
 
@@ -206,7 +219,7 @@ function saveName() {
     document.getElementById("growScreen").classList.add("active");
 
     document.getElementById("growText").innerHTML =
-        "Growing a rose for " + personName + " 🌱";
+        "Growing a beautiful rose for " + personName + " 🌱";
 
     setTimeout(() => {
         showChoice();
@@ -229,7 +242,7 @@ function yesPage() {
     document.getElementById("yesScreen").classList.add("active");
 
     document.getElementById("yesText").innerHTML =
-        "Nice choice, " + personName + " 😄";
+        "Yay! " + personName + " accepted the rose 🌹";
 
     startRoses();
 }
@@ -252,7 +265,7 @@ function startRoses() {
     const container = document.getElementById("roses");
     container.innerHTML = "";
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 35; i++) {
         let rose = document.createElement("div");
         rose.className = "rose";
         rose.innerHTML = "🌹";
@@ -260,10 +273,6 @@ function startRoses() {
         rose.style.animationDuration = Math.random() * 3 + 2 + "s";
         container.appendChild(rose);
     }
-}
-
-function resetAll() {
-    location.reload();
 }
 </script>
 
