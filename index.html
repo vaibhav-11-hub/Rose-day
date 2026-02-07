@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rose Day Special</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #fff0f5;
+    text-align: center;
+}
+
+.screen {
+    display: none;
+    padding: 20px;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.active {
+    display: flex;
+}
+
+.box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+input {
+    padding: 10px;
+    width: 90%;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 20px;
+    margin: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.yes {
+    background: #4caf50;
+    color: white;
+}
+
+.no {
+    background: #f44336;
+    color: white;
+}
+
+.rose-grow {
+    font-size: 60px;
+    animation: grow 3s infinite;
+}
+
+@keyframes grow {
+    0% { transform: scale(0.5); }
+    50% { transform: scale(1); }
+    100% { transform: scale(0.5); }
+}
+
+.floating-roses {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.rose {
+    position: absolute;
+    font-size: 30px;
+    animation: float 4s linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
+}
+
+img {
+    max-width: 200px;
+    margin: 15px;
+}
+
+h1, h2, h3 {
+    margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Sound Effects -->
+<audio id="popSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+<audio id="sadSound" src="https://www.soundjay.com/human/sounds/female-crying-1.mp3"></audio>
+
+<!-- NAME INPUT SCREEN -->
+<div class="screen active" id="nameScreen">
+    <div class="box">
+        <h2>Before the rose grows… 🌱</h2>
+        <p>Who is this rose for?</p>
+
+        <input id="nameInput" placeholder="Enter your name" />
+
+        <button class="yes" onclick="saveName()">
+            Grow my rose 🌱
+        </button>
+    </div>
+</div>
+
+<!-- GROWING SCREEN -->
+<div class="screen" id="growScreen">
+    <h2 id="growText"></h2>
+    <div class="rose-grow">🌹</div>
+</div>
+
+<!-- MAIN CHOICE SCREEN -->
+<div class="screen" id="choiceScreen">
+    <div class="box">
+        <h2 id="mainText"></h2>
+        <p>This rose is for you 🌹</p>
+
+        <img src="https://i.imgur.com/O4M4x5p.png" alt="cat meme">
+
+        <h3>No drama, keep the rose 🔫🐱</h3>
+
+        <button class="yes" onclick="yesPage()">YES 😄</button>
+        <button class="no" onclick="noPage()">NO 🙃</button>
+    </div>
+</div>
+
+<!-- YES SCREEN -->
+<div class="screen" id="yesScreen">
+    <div class="floating-roses" id="roses"></div>
+
+    <div class="box">
+        <h1 id="yesText"></h1>
+        <p>You officially own this rose now 😎</p>
+
+        <div style="font-size:80px;">🌹</div>
+
+        <p>Screenshot this rose so it’s officially yours 😄</p>
+
+        <button class="yes" onclick="resetAll()">
+            Grow another rose 🌹
+        </button>
+    </div>
+</div>
+
+<!-- NO SCREEN -->
+<div class="screen" id="noScreen">
+    <div class="box">
+        <img src="https://i.imgur.com/k1o5Q4T.png" alt="crying cat">
+
+        <h2 id="noText"></h2>
+
+        <button class="yes" onclick="backToYes()">
+            Thik hai rakh lete hu 😅
+        </button>
+    </div>
+</div>
+
+
+<script>
+let personName = "";
+
+function playPop() {
+    document.getElementById("popSound").play();
+}
+
+function playSad() {
+    document.getElementById("sadSound").play();
+}
+
+function saveName() {
+    const input = document.getElementById("nameInput").value;
+
+    if (input.trim() === "") {
+        alert("Please enter a name 😊");
+        return;
+    }
+
+    personName = input;
+
+    document.getElementById("nameScreen").classList.remove("active");
+    document.getElementById("growScreen").classList.add("active");
+
+    document.getElementById("growText").innerHTML =
+        "Growing a rose for " + personName + " 🌱";
+
+    setTimeout(() => {
+        showChoice();
+    }, 3000);
+}
+
+function showChoice() {
+    document.getElementById("growScreen").classList.remove("active");
+    document.getElementById("choiceScreen").classList.add("active");
+
+    document.getElementById("mainText").innerHTML =
+        "Hey " + personName + " 😄";
+}
+
+function yesPage() {
+    playPop();
+
+    document.getElementById("choiceScreen").classList.remove("active");
+    document.getElementById("noScreen").classList.remove("active");
+    document.getElementById("yesScreen").classList.add("active");
+
+    document.getElementById("yesText").innerHTML =
+        "Nice choice, " + personName + " 😄";
+
+    startRoses();
+}
+
+function noPage() {
+    playSad();
+
+    document.getElementById("choiceScreen").classList.remove("active");
+    document.getElementById("noScreen").classList.add("active");
+
+    document.getElementById("noText").innerHTML =
+        "Please na yaar " + personName + " 🥺 <br> rakh le na yaar";
+}
+
+function backToYes() {
+    yesPage();
+}
+
+function startRoses() {
+    const container = document.getElementById("roses");
+    container.innerHTML = "";
+
+    for (let i = 0; i < 30; i++) {
+        let rose = document.createElement("div");
+        rose.className = "rose";
+        rose.innerHTML = "🌹";
+        rose.style.left = Math.random() * 100 + "vw";
+        rose.style.animationDuration = Math.random() * 3 + 2 + "s";
+        container.appendChild(rose);
+    }
+}
+
+function resetAll() {
+    location.reload();
+}
+</script>
+
+</body>
+</html>
