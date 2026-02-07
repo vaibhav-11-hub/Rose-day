@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Rose Day Special</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -39,7 +39,7 @@ body {
     padding: 35px;
     border-radius: 25px;
     box-shadow: 0 0 20px rgba(0,0,0,0.25);
-    max-width: 450px;
+    max-width: 470px;
     width: 100%;
     border: 2px solid #ff4e50;
 }
@@ -56,7 +56,7 @@ input {
 button {
     padding: 14px 24px;
     margin: 10px;
-    font-size: 18px;
+    font-size: 17px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
@@ -116,30 +116,36 @@ img {
 
 h1, h2, h3 {
     margin-bottom: 12px;
-    font-family: 'Dancing Script', cursive;
-    font-style: italic;
     color: #b3003b;
+    font-weight: 600;
 }
 
 p {
-    font-style: italic;
-    font-size: 17px;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 .title {
-    font-size: 30px;
+    font-size: 26px;
     color: #b3003b;
 }
 
 .final-rose {
-    font-size: 100px;
-    text-shadow: 0 0 20px red;
-    animation: glow 2s infinite alternate;
+    font-size: 110px;
+    animation: bounce 2s infinite;
 }
 
-@keyframes glow {
-    from { text-shadow: 0 0 10px red; }
-    to { text-shadow: 0 0 30px #ff4e50; }
+@keyframes bounce {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+.magic-box {
+    background: #ffe6ec;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 15px;
 }
 
 </style>
@@ -147,14 +153,14 @@ p {
 
 <body>
 
-<audio id="popSound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
-<audio id="sadSound" src="https://www.soundjay.com/human/sounds/female-crying-1.mp3"></audio>
+<!-- NEW SOFT SOUND -->
+<audio id="magicSound" src="https://www.soundjay.com/misc/sounds/magic-chime-01.mp3"></audio>
 
 <!-- NAME SCREEN -->
 <div class="screen active" id="nameScreen">
     <div class="box">
-        <h2 class="title">Ek chota sa sawaal… 🌹</h2>
-        <p>Is special rose ka lucky owner kaun hoga?</p>
+        <h2 class="title">Ek chota sa Sawaal… 🌹</h2>
+        <p>Is special Rose ka lucky owner kaun hoga?</p>
 
         <input id="nameInput" placeholder="Apna pyara sa naam likho" />
 
@@ -186,23 +192,26 @@ p {
     </div>
 </div>
 
-<!-- YES -->
+<!-- YES - NEW UPDATED LAST PAGE -->
 <div class="screen" id="yesScreen">
     <div class="floating-roses" id="roses"></div>
 
     <div class="box">
         <h1 id="yesText"></h1>
 
-        <p>
-            Dekha? Smart log hamesha YES bolte hain 😄  
-            Ab yeh rose officially tumhara ho gaya!
-        </p>
-
         <div class="final-rose">🌹</div>
 
-        <p>
-            Is moment ka screenshot le lo –  
-            proof ke liye future me kaam aayega 😉
+        <div class="magic-box">
+            <p>
+                Dekha… ab naraz mat hona 😄  
+                Aur roz BGMI khelne aana,  
+                zyada natak nahii samziii kay? 😜
+            </p>
+        </div>
+
+        <p style="margin-top:10px;">
+            Screenshot le lo –  
+            ab yeh rose officially tumhara ho gaya 😉
         </p>
     </div>
 </div>
@@ -214,9 +223,7 @@ p {
 
         <h2 id="noText"></h2>
 
-        <p>
-            Itna bhi bhaav mat khao yaar 😭
-        </p>
+        <p>Itna bhi bhaav mat khao yaar 😭</p>
 
         <button class="yes" onclick="backToYes()">
             Achha achha... rakh leti hu 😅
@@ -228,12 +235,8 @@ p {
 <script>
 let personName = "";
 
-function playPop() {
-    document.getElementById("popSound").play();
-}
-
-function playSad() {
-    document.getElementById("sadSound").play();
+function playMagic() {
+    document.getElementById("magicSound").play();
 }
 
 function saveName() {
@@ -254,7 +257,7 @@ function saveName() {
 
     setTimeout(() => {
         showChoice();
-    }, 3200);
+    }, 3000);
 }
 
 function showChoice() {
@@ -266,26 +269,24 @@ function showChoice() {
 }
 
 function yesPage() {
-    playPop();
+    playMagic();
 
     document.getElementById("choiceScreen").classList.remove("active");
     document.getElementById("noScreen").classList.remove("active");
     document.getElementById("yesScreen").classList.add("active");
 
     document.getElementById("yesText").innerHTML =
-        "Yay! " + personName + " ne rose accept kar liya 🌹";
+        "Yay! " + personName + " ne Rose accept kar liya 🌹";
 
     startRoses();
 }
 
 function noPage() {
-    playSad();
-
     document.getElementById("choiceScreen").classList.remove("active");
     document.getElementById("noScreen").classList.add("active");
 
     document.getElementById("noText").innerHTML =
-        "Please na " + personName + " 🥺 <br> itna bhi attitude mat dikhao yaar";
+        "Please na " + personName + " 🥺 <br> itna bhi Attitude mat dikhao yaar";
 }
 
 function backToYes() {
@@ -296,7 +297,7 @@ function startRoses() {
     const container = document.getElementById("roses");
     container.innerHTML = "";
 
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 45; i++) {
         let rose = document.createElement("div");
         rose.className = "rose";
         rose.innerHTML = "🌹";
